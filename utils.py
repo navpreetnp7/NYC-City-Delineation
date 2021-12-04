@@ -7,7 +7,7 @@ def load_data():
 
     data = pd.read_csv('data/LEHD_nyc.csv', delimiter=',')
     data = data.rename(columns={'flow': 'weight'})
-    G = nx.from_pandas_edgelist(data, 'origin', 'destination', 'weight')
+    G = nx.from_pandas_edgelist(data, 'origin', 'destination', 'weight',create_using=nx.DiGraph())
     adj_list = np.array([nx.adjacency_matrix(G).todense()], dtype=float)
     init_feat = np.array(data.groupby('origin')['initialFeat'].agg(['unique']))
     true_label = np.array(data.groupby('origin')['true_label'].agg(['unique']))
